@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.alibaba.dao.IndustryDao">
+  <resultMap id="BaseResultMap" type="com.alibaba.entity.IndustryTable">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="CATEGORY_LEVEL" jdbcType="NUMERIC" property="categoryLevel" />
+    <result column="PARENT_ID" jdbcType="NUMERIC" property="parentId" />
+    <result column="CATEGORY_NAME" jdbcType="VARCHAR" property="categoryName" />
+    <result column="CATEGORY_EXPLAIN" jdbcType="VARCHAR" property="categoryExplain" />
+    <result column="PROFIT_MARGIN" jdbcType="NUMERIC" property="profitMargin" />
+    <result column="CREATE_DATE" jdbcType="DATE" property="createDate" />
+    <result column="UPDATE_DATE" jdbcType="DATE" property="updateDate" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, CATEGORY_LEVEL, PARENT_ID, CATEGORY_NAME, CATEGORY_EXPLAIN, PROFIT_MARGIN, CREATE_DATE, 
+    UPDATE_DATE, REMARK
+  </sql>
+  
+  <select id="queryIndustry" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from INDUSTRY order by id desc
+  </select>
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from INDUSTRY
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="int">
+    delete from INDUSTRY
+    where ID = #{id}
+  </delete>
+  <insert id="insert" parameterType="com.alibaba.entity.IndustryTable">
+   <selectKey resultType="int" order="BEFORE" keyProperty="id">  
+       SELECT seq_industry.Nextval as id from DUAL  
+   </selectKey> 
+    insert into INDUSTRY (ID, CATEGORY_LEVEL, PARENT_ID, 
+      CATEGORY_NAME, CATEGORY_EXPLAIN, PROFIT_MARGIN, 
+      CREATE_DATE, UPDATE_DATE, REMARK
+      )
+    values (#{id}, #{categoryLevel}, #{parentId}, 
+      #{categoryName}, #{categoryExplain}, #{profitMargin}, 
+      #{createDate}, #{updateDate}, #{remark}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.alibaba.entity.IndustryTable">
+  	<selectKey resultType="int" order="BEFORE" keyProperty="id">  
+       SELECT seq_industry.Nextval as id from DUAL  
+   	</selectKey>
+    insert into INDUSTRY
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="categoryLevel != null">
+        CATEGORY_LEVEL,
+      </if>
+      <if test="parentId != null">
+        PARENT_ID,
+      </if>
+      <if test="categoryName != null">
+        CATEGORY_NAME,
+      </if>
+      <if test="categoryExplain != null">
+        CATEGORY_EXPLAIN,
+      </if>
+      <if test="profitMargin != null">
+        PROFIT_MARGIN,
+      </if>
+      <if test="createDate != null">
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null">
+        UPDATE_DATE,
+      </if>
+      <if test="remark != null">
+        REMARK,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="categoryLevel != null">
+        #{categoryLevel,jdbcType=DECIMAL},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=DECIMAL},
+      </if>
+      <if test="categoryName != null">
+        #{categoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryExplain != null">
+        #{categoryExplain,jdbcType=VARCHAR},
+      </if>
+      <if test="profitMargin != null">
+        #{profitMargin,jdbcType=DECIMAL},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=DATE},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=DATE},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.alibaba.entity.IndustryTable">
+    update INDUSTRY
+    <set>
+      <if test="categoryLevel != null">
+        CATEGORY_LEVEL = #{categoryLevel,jdbcType=DECIMAL},
+      </if>
+      <if test="parentId != null">
+        PARENT_ID = #{parentId,jdbcType=DECIMAL},
+      </if>
+      <if test="categoryName != null">
+        CATEGORY_NAME = #{categoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryExplain != null">
+        CATEGORY_EXPLAIN = #{categoryExplain,jdbcType=VARCHAR},
+      </if>
+      <if test="profitMargin != null">
+        PROFIT_MARGIN = #{profitMargin,jdbcType=DECIMAL},
+      </if>
+      <if test="createDate != null">
+        CREATE_DATE = #{createDate,jdbcType=DATE},
+      </if>
+      <if test="updateDate != null">
+        UPDATE_DATE = #{updateDate,jdbcType=DATE},
+      </if>
+      <if test="remark != null">
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.alibaba.entity.IndustryTable">
+    update INDUSTRY
+    set CATEGORY_LEVEL = #{categoryLevel,jdbcType=DECIMAL},
+      PARENT_ID = #{parentId,jdbcType=DECIMAL},
+      CATEGORY_NAME = #{categoryName,jdbcType=VARCHAR},
+      CATEGORY_EXPLAIN = #{categoryExplain,jdbcType=VARCHAR},
+      PROFIT_MARGIN = #{profitMargin,jdbcType=DECIMAL},
+      CREATE_DATE = #{createDate,jdbcType=DATE},
+      UPDATE_DATE = #{updateDate,jdbcType=DATE},
+      REMARK = #{remark,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+ 
+</mapper>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 这里的namespace对应的是dao -->
+<mapper namespace="com.alibaba.dao.industryMapper">
+  <!-- type对应的是实体类；我用的是oracle数据库，数字类型字段要用NUMERIC这个类型，用NUMBER这个类型会报错 -->	
+  <resultMap id="BaseResultMap" type="com.alibaba.entity.industry">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="CATEGORY_LEVEL" jdbcType="DECIMAL" property="categoryLevel" />
+    <result column="PARENT_ID" jdbcType="DECIMAL" property="parentId" />
+    <result column="CATEGORY_NAME" jdbcType="VARCHAR" property="categoryName" />
+    <result column="CATEGORY_EXPLAIN" jdbcType="VARCHAR" property="categoryExplain" />
+    <result column="PROFIT_MARGIN" jdbcType="DECIMAL" property="profitMargin" />
+    <result column="CREATE_DATE" jdbcType="DATE" property="createDate" />
+    <result column="UPDATE_DATE" jdbcType="DATE" property="updateDate" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <!-- Base_Column_List就相当于你需要查询的字段，完全可以用select * 来替代啊，不太明白这里为什么会自动生成此项 -->
+  <sql id="Base_Column_List">
+    ID, CATEGORY_LEVEL, PARENT_ID, CATEGORY_NAME, CATEGORY_EXPLAIN, PROFIT_MARGIN, CREATE_DATE, 
+    UPDATE_DATE, REMARK
+  </sql>
+  <!-- id就是dao里面定义的方法，要保持一致 -->
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+     <include refid="Base_Column_List" />
+    from INDUSTRY
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  
+</mapper>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 这里的namespace对应的是dao -->
+<mapper namespace="com.alibaba.dao.CarInfoDao">
+	<!-- type对应的是实体类；我用的是oracle数据库，数字类型字段要用NUMERIC这个类型，NUMBER这个类型会报错 -->					
+	<resultMap id="BaseResultMap" type="com.alibaba.entity.CarInfoTable">
+	    <id column="ID" jdbcType="INTEGER" property="id" />
+	    <result column="ORDER_CODE" jdbcType="VARCHAR" property="orderCode" />
+	    <result column="CAR_BRAND" jdbcType="VARCHAR" property="carBrand" />
+	    <result column="CAR_SPECIFIC_MODEL" jdbcType="VARCHAR" property="carSpecificModel" />
+	    <result column="CAR_NUMBER" jdbcType="VARCHAR" property="carNumber" />
+	    <result column="REGISTRATION_TIME" jdbcType="DATE" property="registrationTime" />
+	    <result column="MILEAGE" jdbcType="NUMERIC" property="mileage" />
+	    <result column="VEHICLE_CONDITION" jdbcType="VARCHAR" property="vehicleCondition" />
+	    <result column="EVALUATED_PRICE" jdbcType="NUMERIC" property="evaluatedPrice" />
+	    <result column="VEHICLE_CONDITION_EVALUATE" jdbcType="VARCHAR" property="vehicleConditionEvaluate" />
+	    <result column="CREATE_DATE" jdbcType="DATE" property="createDate" />
+	    <result column="UPDATE_DATE" jdbcType="DATE" property="updateDate" />
+	    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+  	</resultMap>
+  	
+  	<sql id="Base_Column_List">
+	    ID, ORDER_CODE, CAR_BRAND, CAR_SPECIFIC_MODEL, CAR_NUMBER, REGISTRATION_TIME, MILEAGE, 
+	    VEHICLE_CONDITION, EVALUATED_PRICE, VEHICLE_CONDITION_EVALUATE, CREATE_DATE, UPDATE_DATE, REMARK
+  	</sql>
+  	    
+	<select id="queryCarInfo" resultMap="BaseResultMap">
+		select 
+		<include refid="Base_Column_List"/>
+		from car_info  
+	</select>
+	
+	<select id="queryCarInfoByOrderCode" resultMap="BaseResultMap">
+		select 
+ 		<include refid="Base_Column_List"/>
+ 		from car_info where order_code = #{orderCode} and car_brand = #{carName}
+	</select>
+	
+		
+	<select id="editCarInfoById" resultMap="BaseResultMap">
+		select 
+		<include refid="Base_Column_List"/>
+		from car_info where id = #{id,jdbcType=INTEGER} 
+	</select>
+	
+</mapper>
